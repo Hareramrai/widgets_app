@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   # TODO: implement me
   def user_signed_in?
-    false
+    current_user.present?
   end
 end

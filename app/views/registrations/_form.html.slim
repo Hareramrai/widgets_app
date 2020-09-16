@@ -1,0 +1,45 @@
+.modal-dialog role="document" 
+  .modal-content
+    = form_with model: @registration do |f|
+      .modal-header
+        h5.modal-title Signup Form
+        button.close aria-label="Close" data-dismiss="modal" type="button" 
+          span aria-hidden="true"  ×
+      .modal-body
+
+        - if @registration.errors.any?
+          .alert.alert-warning.alert-dismissible.fade.show[role="alert"]
+            h5
+              = pluralize(@registration.errors.count, "error")
+              |  prohibited this registration from being saved: 
+            ul[style="margin: 0"]
+              - @registration.errors.full_messages.each do |message|
+                li
+                  = message
+            button.close[type="button" data-dismiss="alert" aria-label="Close"]
+              span[aria-hidden="true"]
+                | ×
+
+        .form-group
+          = f.label :first_name, 'First Name'
+          = f.text_field :first_name, class: "form-control"
+        
+        .form-group
+          = f.label :last_name, 'Last Name'
+          = f.text_field :last_name, class: "form-control"
+        
+        .form-group
+          = f.label :email
+          = f.email_field :email, class: "form-control", required: true
+        
+        .form-group
+          = f.label :password
+          = f.password_field :password, class: "form-control"
+        
+        .form-group
+          = f.label :image_url, 'Image URL'
+          = f.text_field :image_url, class: "form-control" 
+
+      .modal-footer
+        button.btn.btn-secondary data-dismiss="modal" type="button"  Close
+        = f.submit "Signup", class: "btn btn-primary"

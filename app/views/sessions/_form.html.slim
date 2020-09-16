@@ -1,0 +1,33 @@
+.modal-dialog role="document" 
+  .modal-content
+    = form_with model: @session, url: session_path do |f|
+      .modal-header
+        h5.modal-title Sign In Form
+        button.close aria-label="Close" data-dismiss="modal" type="button" 
+          span aria-hidden="true"  ×
+      .modal-body
+
+        - if @session.errors.any?
+          .alert.alert-warning.alert-dismissible.fade.show[role="alert"]
+            h5
+              = pluralize(@session.errors.count, "error")
+              |  prohibited this form being valid: 
+            ul[style="margin: 0"]
+              - @session.errors.full_messages.each do |message|
+                li
+                  = message
+            button.close[type="button" data-dismiss="alert" aria-label="Close"]
+              span[aria-hidden="true"]
+                | ×
+
+        .form-group
+          = f.label :username
+          = f.email_field :username, class: "form-control", required: true
+        
+        .form-group
+          = f.label :password
+          = f.password_field :password, class: "form-control"
+
+      .modal-footer
+        button.btn.btn-secondary data-dismiss="modal" type="button"  Close
+        = f.submit "Sign In", class: "btn btn-primary"

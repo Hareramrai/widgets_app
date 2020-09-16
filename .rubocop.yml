@@ -13,8 +13,7 @@ AllCops:
     - "storage/**/*"
     - "tmp/**/*"
     - "vendor/**/*"
-    - Gemfile
-    - Gemfile.lock
+    - "node_modules/**/*"
 
 Performance:
   enabled: true
