@@ -2,4 +2,6 @@ li.nav-item.dropdown
   a.nav-link.dropdown-toggle href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
     = current_user.username
   ul.dropdown-menu.dropdown-menu-right.font-size-sm.font-weight-bold aria-labelledby="navbarDropdown"
+    = link_to 'Account', edit_registration_path(current_user), class: 'dropdown-item', remote: true
+    = link_to 'Change Password', new_password_path, class: 'dropdown-item', remote: true
     = link_to 'Logout', destroy_session_path, method: :delete, class: 'dropdown-item'

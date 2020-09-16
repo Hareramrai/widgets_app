@@ -4,8 +4,16 @@ class Widgets::Client
   API_ENDPOINT = Rails.application.secrets.client_url
 
   class << self
+    def get(token, resource, params = {})
+      request(token, :get, resource, params)
+    end
+
     def post(token, resource, params = {})
       request(token, :post, resource, params)
+    end
+
+    def put(token, resource, params = {})
+      request(token, :put, resource, params)
     end
 
     def client(token)

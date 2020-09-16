@@ -1,2 +1,2 @@
-$("#modal-window").html("<%= j (render 'registrations/form') %>");
+$("#modal-window").html("<%= j (render 'registrations/form', method: :post, form_title: "Signup Form", form_field: "new_field") %>");
 $("#modal-window").modal();

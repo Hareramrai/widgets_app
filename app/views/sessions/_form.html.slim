@@ -6,19 +6,7 @@
         button.close aria-label="Close" data-dismiss="modal" type="button" 
           span aria-hidden="true"  ×
       .modal-body
-
-        - if @session.errors.any?
-          .alert.alert-warning.alert-dismissible.fade.show[role="alert"]
-            h5
-              = pluralize(@session.errors.count, "error")
-              |  prohibited this form being valid: 
-            ul[style="margin: 0"]
-              - @session.errors.full_messages.each do |message|
-                li
-                  = message
-            button.close[type="button" data-dismiss="alert" aria-label="Close"]
-              span[aria-hidden="true"]
-                | ×
+        = render 'shared/form_error', model: @session
 
         .form-group
           = f.label :username

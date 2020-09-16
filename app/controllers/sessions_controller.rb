@@ -9,7 +9,8 @@ class SessionsController < ApplicationController
     @session = Session.new(session_params)
 
     if @session.save
-      user = Authentication::SigninUserService.call(@session)
+      user = Authentication::UpdateTokenService.call(@session.username,
+                                                     @session.api_response_data)
       session[:user_id] = user.id
 
       render :create, notice: "Signin successfully."
@@ -19,12 +20,15 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    response = Authentication::RevokeAccessService.call(current_user.access_token)
+    access_token = GetAccessTokenService.call(current_user)
+    response = Authentication::RevokeAccessService.call(access_token)
+
+    session.delete :user_id
+
     if response[:status]
-      session.delete :user_id
       redirect_to :root, notice: "Logged Out Successfully"
     else
-      redirect_to :root, error: "Something went wrong!"
+      redirect_to :root, warning: "Something went wrong!"
     end
   end
 

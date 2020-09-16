@@ -1,0 +1,12 @@
+- if model.errors.any?
+  .alert.alert-warning.alert-dismissible.fade.show[role="alert"]
+    h5
+      = pluralize(model.errors.count, "error")
+      |  prohibited this form from being submitted: 
+    ul[style="margin: 0"]
+      - model.errors.full_messages.each do |message|
+        li
+          = message
+    button.close[type="button" data-dismiss="alert" aria-label="Close"]
+      span[aria-hidden="true"]
+        | ×

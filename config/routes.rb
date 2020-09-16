@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   resource :session, only: [:new, :create] do 
     delete :destroy, as: "destroy"
   end
-  resources :registrations
+  
+  resource :registration
+  resource :password, only: [:new, :create]
 
   root to: 'home#index'
 end

@@ -1,12 +1,7 @@
 # frozen_string_literal: true
 
-class Session
+class Session < ApplicationForm
   API_RESOURCE = "/oauth/token"
-
-  include ActiveModel::Model
-  include ActiveModel::Attributes
-
-  attr_accessor :api_response_data
 
   attribute :username
   attribute :password
@@ -19,13 +14,8 @@ class Session
     return false unless valid?
 
     self.grant_type = "password"
-
     response = Widgets::OauthClient.post(API_RESOURCE, attributes)
 
-    self.api_response_data = response.dig(:body, :data)
-
-    errors.add(:widgets_api_error, response.dig(:body, :message)) unless response[:status]
-
-    response[:status]
+    response_and_error(response)
   end
 end
