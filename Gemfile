@@ -51,7 +51,7 @@ group :development, :test do
   gem "rubocop-rails"
   gem "shoulda-matchers"
   gem "simplecov", require: false
-
+  gem "webmock"
   # vulnerabilities in the gems
   gem "bundler-audit"
   # Static analysis tool
