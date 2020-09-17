@@ -51,6 +51,11 @@ group :development, :test do
   gem "rubocop-rails"
   gem "shoulda-matchers"
   gem "simplecov", require: false
+
+  # vulnerabilities in the gems
+  gem "bundler-audit"
+  # Static analysis tool
+  gem "brakeman"
 end
 
 group :development do

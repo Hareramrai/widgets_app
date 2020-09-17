@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Registration < ApplicationForm
-  API_CREATE_RESOURCE = "/api/v1/users"
-  API_RESOURCE_ME = "/api/v1/users/me"
+  API_RESOURCE = "/api/v1/users"
 
+  attribute :id
   attribute :email
   attribute :password
   attribute :first_name
@@ -16,25 +16,35 @@ class Registration < ApplicationForm
   validates :last_name, presence: true
   validates :image_url, presence: true
 
-  def self.find_me(token)
-    response = Widgets::Client.get(token, API_RESOURCE_ME)
-    user = response.dig(:body, :data, :user)
+  class << self
+    def find(token, user_id)
+      response = Widgets::Client.get(token, "#{API_RESOURCE}/#{user_id}")
+      user = response.dig(:body, :data, :user)
 
-    new(first_name: user[:first_name], last_name: user[:last_name],
-        image_url: user.dig(:images, :original_url))
+      new(id: user[:id], first_name: user[:first_name], last_name: user[:last_name],
+          image_url: user.dig(:images, :original_url))
+    end
+
+    def find_me(token)
+      find(token, "me")
+    end
+  end
+
+  def name
+    "#{first_name} #{last_name}"
   end
 
   def save
     return false unless valid?
 
-    response = Widgets::OauthClient.post(API_CREATE_RESOURCE, user: attributes)
+    response = Widgets::OauthClient.post(API_RESOURCE, user: attributes.compact)
     response_and_error(response)
   end
 
   def update_using_token(token)
     return false unless valid?
 
-    response = Widgets::Client.put(token, API_RESOURCE_ME, user: attributes.compact)
+    response = Widgets::Client.put(token, "#{API_RESOURCE}/me", user: attributes.compact)
     response_and_error(response)
   end
 end

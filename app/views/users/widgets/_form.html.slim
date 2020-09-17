@@ -1,0 +1,17 @@
+= form_with(model: widget, url: user_widgets_path('me'), local: true) do |form|
+  = render 'shared/form_error', model: widget
+
+  .form-group
+    = form.label :name
+    = form.text_field :name, class: 'form-control'
+  
+  .form-group
+    = form.label :description
+    = form.text_field :description, class: 'form-control'
+  
+  .form-group
+    = form.label :kind
+    = form.select :kind, ['hidden', 'visible'], {}, { class: 'form-control' }
+  
+  p
+    = form.submit class: 'btn btn-primary'

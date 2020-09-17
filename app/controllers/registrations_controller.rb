@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class RegistrationsController < ApplicationController
+  before_action :authenticate_user!, only: [:edit, :update]
+
   before_action :set_access_token, only: [:edit, :update]
   before_action :set_registration, only: [:edit]
 
@@ -29,6 +31,8 @@ class RegistrationsController < ApplicationController
 
     if @registration.update_using_token(@access_token)
       UpdateUserService.call(@registration.api_response_data)
+
+      current_user.reload
       render
     else
       render :edit

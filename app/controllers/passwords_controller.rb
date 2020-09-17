@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class PasswordsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_access_token, only: [:create]
+
   def new
     @password = Password.new
   end

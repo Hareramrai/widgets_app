@@ -6,6 +6,10 @@ class Widgets::OauthClient
   CLIENT_SECRET = Rails.application.secrets.client_secret
 
   class << self
+    def get(resource, params = {})
+      request(:get, "#{resource}?#{merge_credentials(params).to_query}")
+    end
+
     def post(resource, params = {})
       request(:post, resource, merge_credentials(params))
     end

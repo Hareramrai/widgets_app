@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
+  before_action :authenticate_user!, only: [:destroy]
+
   def new
     @session = Session.new
   end

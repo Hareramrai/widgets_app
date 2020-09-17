@@ -1,0 +1,11 @@
+.row
+  .col
+    .float-left.mb-4
+      h2
+        = "#{@user.name}'s Widgets "
+    .float-right.mb-4
+      = render 'widgets/search_form', url: user_widgets_path(@user.id)
+    = render 'widgets/widgets_list', widgets: @widgets
+
+    br
+    = link_to 'New Widgets', new_user_widget_path('me')

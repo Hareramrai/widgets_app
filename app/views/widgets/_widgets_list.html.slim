@@ -1,0 +1,22 @@
+table.table.table-striped
+  thead
+    tr
+      th[scope="col"]
+        | #
+      th[scope="col"]
+        | Name
+      th[scope="col"]
+        | Description
+      th[scope="col"]
+        | User
+  tbody
+    - widgets.each do |widget|
+      tr
+        th.align-middle[scope="row"]
+          = widget[:id]
+        td.align-middle
+          = widget[:name]
+        td.align-middle
+          = widget[:description]
+        td.align-middle
+          = link_to widget.dig(:user, :name), user_widgets_path(widget.dig(:user, :id)), class: 'btn btn-sm btn-outline-primary'

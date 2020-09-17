@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  get 'home/index'
-  
+
   resource :session, only: [:new, :create] do 
     delete :destroy, as: "destroy"
   end
@@ -8,5 +7,13 @@ Rails.application.routes.draw do
   resource :registration
   resource :password, only: [:new, :create]
 
-  root to: 'home#index'
+  resources :widgets
+
+  resources :users, only:[] do 
+    scope module: :users do
+      resources :widgets
+    end
+  end
+
+  root to: 'widgets#index'
 end

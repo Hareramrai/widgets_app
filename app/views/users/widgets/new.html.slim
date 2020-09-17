@@ -1,0 +1,6 @@
+.row
+  .col
+    h2
+      | New Widget
+    = render 'form', widget: @widget
+    = link_to 'Back', user_widgets_path('me')
